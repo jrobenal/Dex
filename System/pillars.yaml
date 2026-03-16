@@ -1,31 +1,199 @@
-# Strategic Pillars Configuration
-# 
-# Pillars are your main focus areas — think of them as how you carve up your role thematically.
-# These are NOT time-bound (like quarterly goals). They represent ongoing areas of responsibility
-# that typically stay consistent for 6-12+ months, or until your role significantly changes.
+# Strategic Pillars Configuration — Sales Edition
 #
-# PILLAR (ongoing):           GOAL (time-bound):
-# "Revenue Growth"      vs    "Hit 150% quota in Q1"
-# "Product Strategy"    vs    "Launch mobile app"
-# "Customer Retention"  vs    "Reduce churn to <2%"
+# Pillars are your main focus areas for your sales role. They represent the ongoing
+# responsibilities that define how you spend your time and create value.
 #
-# Want to change your pillars? Just chat with Claude: "I need to reconfigure my strategic pillars"
-# — it'll help you update how your work ladders up to new focus areas.
+# These are NOT time-bound goals (those go in Quarter_Goals.md).
+# A pillar stays consistent for 6-12+ months. Your quota changes; your pillars don't.
 #
-# The Work MCP uses these to categorize tasks and check balance across your work.
+# PILLAR (ongoing):               GOAL (time-bound):
+# "Pipeline Development"    vs    "Source $2M in new pipeline in Q2"
+# "Deal Execution"          vs    "Close Acme Corp by March 31"
+# "Team & Coaching"         vs    "Ramp two new reps to full productivity"
+#
+# Pillars are pre-configured for sales teams. Edit the keywords to match your
+# specific language, motion, and market segment.
+#
+# Want to reconfigure? Just chat: "I need to update my strategic pillars"
 
-pillars: []
-  # Will be populated during onboarding
-  # Example structure:
-  # - id: pillar_id
-  #   name: "Pillar Name"
-  #   description: "What this pillar represents"
-  #   keywords:
-  #     - keyword1
-  #     - keyword2
+pillars:
+  - id: pipeline_development
+    name: "Pipeline Development"
+    description: "Generating and qualifying new opportunities — prospecting, outbound, inbound, and partner-sourced deals"
+    keywords:
+      - prospect
+      - prospecting
+      - outbound
+      - cold
+      - cold outreach
+      - SDR
+      - BDR
+      - lead
+      - leads
+      - ICP
+      - ideal customer profile
+      - sequence
+      - cadence
+      - territory
+      - demand gen
+      - sourcing
+      - referral
+      - event
+      - conference
+      - LinkedIn outreach
+      - target account
+      - account list
+      - pipeline generation
+      - top of funnel
+      - qualified
+      - qualification
+      - MEDDIC
+      - BANT
+      - discovery
+
+  - id: deal_execution
+    name: "Deal Execution"
+    description: "Advancing and closing active opportunities — discovery, demos, proposals, negotiations, and procurement"
+    keywords:
+      - demo
+      - demonstration
+      - discovery call
+      - proposal
+      - POC
+      - proof of concept
+      - pilot
+      - RFP
+      - RFI
+      - contract
+      - negotiation
+      - negotiating
+      - close
+      - closing
+      - legal
+      - procurement
+      - champion
+      - exec sponsor
+      - economic buyer
+      - pricing
+      - discount
+      - commit
+      - committed
+      - forecasted
+      - multi-thread
+      - stakeholder
+      - deal review
+      - account plan
+      - mutual action plan
+      - MAP
+      - next step
+
+  - id: customer_success_expansion
+    name: "Customer Success & Expansion"
+    description: "Retaining and growing existing customers — renewals, upsells, QBRs, health monitoring, and expansion"
+    keywords:
+      - renewal
+      - renew
+      - upsell
+      - cross-sell
+      - expansion
+      - expand
+      - QBR
+      - quarterly business review
+      - EBR
+      - executive business review
+      - adoption
+      - churn
+      - churn risk
+      - at risk
+      - health score
+      - NPS
+      - customer satisfaction
+      - CSAT
+      - onboarding
+      - success plan
+      - retention
+      - customer health
+      - ARR growth
+      - net revenue retention
+      - NRR
+      - GRR
+      - gross retention
+      - logo retention
+
+  - id: team_and_coaching
+    name: "Team & Coaching"
+    description: "Building and developing the sales team — rep performance, coaching, hiring, onboarding, and culture (primarily for managers and leaders)"
+    keywords:
+      - coaching
+      - coach
+      - rep performance
+      - rep
+      - ramp
+      - ramping
+      - hire
+      - hiring
+      - interview
+      - onboarding
+      - pipeline review
+      - forecast call
+      - team meeting
+      - 1:1
+      - one-on-one
+      - role play
+      - call review
+      - feedback
+      - PIP
+      - recognition
+      - spiff
+      - quota attainment
+      - OTE
+      - compensation
+      - headcount
+      - capacity
+      - team health
+      - culture
+      - enablement
+
+  - id: revenue_strategy_operations
+    name: "Revenue Strategy & Operations"
+    description: "Driving the overall revenue engine — GTM strategy, forecasting, territory planning, and operational excellence (primarily for leaders)"
+    keywords:
+      - GTM
+      - go-to-market
+      - territory plan
+      - territory
+      - comp plan
+      - compensation plan
+      - headcount plan
+      - board
+      - board deck
+      - SKO
+      - sales kickoff
+      - forecast
+      - forecasting
+      - rev ops
+      - revenue operations
+      - CRM
+      - CRM hygiene
+      - Salesforce
+      - HubSpot
+      - analytics
+      - market expansion
+      - segment
+      - ICP refinement
+      - partnership
+      - channel
+      - alliances
+      - win rate
+      - ASP
+      - average selling price
+      - sales cycle
+      - velocity
+      - pipeline coverage
 
 # Priority limits (how many active tasks per priority level)
+# Sales context: P0 = must happen today (deal-critical), P1 = this week, P2 = backlog
 priority_limits:
-  P0: 3   # Critical/urgent - max 3 at a time
-  P1: 5   # Important - max 5 at a time
-  P2: 10  # Normal - suggested limit
+  P0: 3   # Critical/urgent deal actions or manager escalations — max 3 at a time
+  P1: 5   # Important weekly priorities (call prep, proposals, coaching sessions)
+  P2: 10  # Backlog (admin, research, internal projects)

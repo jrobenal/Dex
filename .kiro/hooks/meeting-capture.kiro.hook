@@ -1,0 +1,9 @@
+{
+  "enabled": true,
+  "name": "Sales Meeting Auto-Extract",
+  "description": "When a new meeting note is created in the Inbox, automatically extract BANT signals, action items, objections, competitive mentions, and next steps. Flags missing next steps.",
+  "eventType": "fileCreated",
+  "filePatterns": ["00-Inbox/Meetings/*.md"],
+  "hookAction": "askAgent",
+  "outputPrompt": "A new meeting note was just created in 00-Inbox/Meetings/. Process it now:\n\n1. **Action Items** — Extract all tasks with owners and dates. Create each as a task in 03-Tasks/Tasks.md via the work-mcp.\n2. **BANT Signals** — Note: Budget confirmed or indicated? Authority — was the economic buyer present or named? Need — what specific pain or goal was articulated? Timeline — was a decision date or urgency mentioned?\n3. **Objections** — What concerns or objections were raised and how were they handled?\n4. **Competitive Mentions** — Any alternatives being evaluated? How did we compare?\n5. **Next Step** — What is the agreed next action, date, and owner? ⚠️ FLAG clearly if no next step was agreed.\n6. **People** — Update person pages in 05-Areas/People/ for everyone mentioned. Add meeting reference and any new context.\n\nAppend a structured '## Meeting Intelligence' section to the bottom of the meeting note file with your findings. Keep it concise — bullets only."
+}

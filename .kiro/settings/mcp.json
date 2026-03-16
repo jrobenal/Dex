@@ -1,0 +1,170 @@
+{
+  "mcpServers": {
+
+    "work-mcp": {
+      "command": "python",
+      "args": ["${VAULT_PATH}/core/mcp/work_server.py"],
+      "env": {
+        "VAULT_PATH": "${VAULT_PATH}"
+      },
+      "disabled": false,
+      "autoApprove": ["lookup_person", "build_people_index", "get_tasks", "get_priorities", "get_goals"]
+    },
+
+    "calendar-mcp": {
+      "command": "python",
+      "args": ["${VAULT_PATH}/core/mcp/calendar_server.py"],
+      "env": {
+        "VAULT_PATH": "${VAULT_PATH}"
+      },
+      "disabled": false,
+      "autoApprove": ["get_events", "get_today_events", "get_week_events"]
+    },
+
+    "granola-mcp": {
+      "command": "python",
+      "args": ["${VAULT_PATH}/core/mcp/granola_server.py"],
+      "env": {
+        "VAULT_PATH": "${VAULT_PATH}"
+      },
+      "disabled": false,
+      "autoApprove": ["get_meetings", "get_recent_meetings", "get_meeting_transcript"]
+    },
+
+    "career-mcp": {
+      "command": "python",
+      "args": ["${VAULT_PATH}/core/mcp/career_server.py"],
+      "env": {
+        "VAULT_PATH": "${VAULT_PATH}"
+      },
+      "disabled": false,
+      "autoApprove": ["get_evidence", "get_competencies", "get_promotion_readiness"]
+    },
+
+    "dex-improvements-mcp": {
+      "command": "python",
+      "args": ["${VAULT_PATH}/core/mcp/dex_improvements_server.py"],
+      "env": {
+        "VAULT_PATH": "${VAULT_PATH}"
+      },
+      "disabled": false,
+      "autoApprove": ["get_ideas", "capture_idea", "get_pending_update_notification", "mark_update_notified"]
+    },
+
+    "resume-mcp": {
+      "command": "python",
+      "args": ["${VAULT_PATH}/core/mcp/resume_server.py"],
+      "env": {
+        "VAULT_PATH": "${VAULT_PATH}"
+      },
+      "disabled": false,
+      "autoApprove": []
+    },
+
+    "update-checker": {
+      "command": "python",
+      "args": ["${VAULT_PATH}/core/mcp/update_checker.py"],
+      "env": {
+        "VAULT_PATH": "${VAULT_PATH}"
+      },
+      "disabled": false,
+      "autoApprove": ["check_for_updates", "get_pending_update_notification", "mark_update_notified"]
+    },
+
+    "onboarding-mcp": {
+      "command": "python",
+      "args": ["${VAULT_PATH}/core/mcp/onboarding_server.py"],
+      "env": {
+        "VAULT_PATH": "${VAULT_PATH}"
+      },
+      "disabled": false,
+      "autoApprove": ["get_onboarding_status", "verify_dependencies"]
+    },
+
+    "dex-analytics": {
+      "command": "python",
+      "args": ["${VAULT_PATH}/core/mcp/analytics_server.py"],
+      "env": {
+        "VAULT_PATH": "${VAULT_PATH}",
+        "DEX_ANALYTICS_MODE": "proxy",
+        "DEX_ANALYTICS_ENDPOINT": "",
+        "DEX_ANALYTICS_PROXY_TOKEN": ""
+      },
+      "disabled": false,
+      "autoApprove": ["track_event"]
+    },
+
+    "slack-mcp": {
+      "command": "npx",
+      "args": ["-y", "slack-mcp"],
+      "env": {},
+      "disabled": true
+    },
+
+    "google-workspace-mcp": {
+      "command": "npx",
+      "args": ["-y", "google-workspace-mcp"],
+      "env": {
+        "GOOGLE_CLIENT_ID": "${GOOGLE_CLIENT_ID}",
+        "GOOGLE_CLIENT_SECRET": "${GOOGLE_CLIENT_SECRET}"
+      },
+      "disabled": true
+    },
+
+    "teams-mcp": {
+      "command": "npx",
+      "args": ["-y", "teams-mcp"],
+      "env": {
+        "TEAMS_TENANT_ID": "${TEAMS_TENANT_ID}",
+        "TEAMS_CLIENT_ID": "${TEAMS_CLIENT_ID}"
+      },
+      "disabled": true
+    },
+
+    "todoist-mcp": {
+      "command": "npx",
+      "args": ["-y", "todoist-mcp-server"],
+      "env": {
+        "TODOIST_API_KEY": "${TODOIST_API_KEY}"
+      },
+      "disabled": true
+    },
+
+    "things3-mcp": {
+      "command": "npx",
+      "args": ["-y", "things3-mcp"],
+      "env": {},
+      "disabled": true
+    },
+
+    "trello-mcp": {
+      "command": "npx",
+      "args": ["-y", "mcp-server-trello"],
+      "env": {
+        "TRELLO_API_KEY": "${TRELLO_API_KEY}",
+        "TRELLO_TOKEN": "${TRELLO_TOKEN}"
+      },
+      "disabled": true
+    },
+
+    "zoom-mcp": {
+      "command": "npx",
+      "args": ["-y", "zoom-mcp"],
+      "env": {
+        "ZOOM_CLIENT_ID": "${ZOOM_CLIENT_ID}",
+        "ZOOM_CLIENT_SECRET": "${ZOOM_CLIENT_SECRET}"
+      },
+      "disabled": true
+    },
+
+    "atlassian-mcp": {
+      "command": "npx",
+      "args": ["-y", "@anthropic/atlassian-remote-mcp"],
+      "env": {
+        "ATLASSIAN_SITE": "${ATLASSIAN_SITE}",
+        "ATLASSIAN_TOKEN": "${ATLASSIAN_TOKEN}"
+      },
+      "disabled": true
+    }
+  }
+}

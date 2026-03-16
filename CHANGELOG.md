@@ -7,6 +7,83 @@ All notable changes to Dex will be documented in this file.
 
 ---
 
+## [1.18.5] — Kiro UX Polish: Zero-friction Setup for Sales Teams (2026-03-16)
+
+**Goal:** Make it dead simple for a non-technical sales person to download this and be productive in Kiro within 5 minutes.
+
+**What changed:**
+
+* **`dex-setup.sh` / `dex-setup.bat`** — One-command setup script for Mac/Linux and Windows. Auto-detects vault path, installs Python + Node dependencies, bakes VAULT_PATH into `.kiro/settings/mcp.json` (no manual env var editing required), and sets VAULT_PATH system-wide via `launchctl setenv` (Mac) or `setx` (Windows) so Kiro picks it up without shell restarts. Gives clear success/error feedback with next steps.
+
+* **`QUICKSTART.md`** — 5-step guide. Install Kiro → install prerequisites → clone → run `./dex-setup.sh` → type `/getting-started`. Nothing else.
+
+* **Removed 3 noisy hooks** — `person-context.kiro.hook`, `company-context.kiro.hook`, and `deal-stale.kiro.hook` removed. In Kiro, `hookAction: "askAgent"` fires a *visible* new agent interaction on every file save — extremely disruptive. Context enrichment and deal-stale detection moved to `.kiro/steering/behaviors.md` as always-on instructions. Same capability, zero noise.
+
+* **`.kiro/steering/behaviors.md` updated** — Added "Automatic Context Enrichment" section covering: silently look up person pages when names appear, silently look up company pages when accounts appear, scan for stale deals when pipeline is discussed. Replaces the 3 removed hooks.
+
+* **`.kiro/settings/mcp.json` fixed** — Removed `_comment_optional` key (Kiro was attempting to connect it as an MCP server).
+
+* **All 72 skills now in `.kiro/skills/`** — Migrated remaining 57 skills (previously only 12 were there). Also promoted 4 sales-specific skills from `_available/sales/`: `account-plan`, `call-prep`, `deal-review`, `pipeline-health`. Every skill now appears when users type `/` in Kiro.
+
+* **`QUICKSTART.md` + `README.md`** — README now leads with the quickstart link and a simple what-it-does table. Setup section reduced to one `./dex-setup.sh` command.
+
+* **Onboarding flow updated** — Removed Cursor/Claude Code platform detection from `.claude/flows/onboarding.md`. Kiro uses conversational chat natively.
+
+* **`getting-started` skill updated** — Replaced "Cursor UX tip" with a Kiro Autopilot vs Supervised mode tip.
+
+**What you need to do (fresh install):** Clone the repo, open in Kiro, run `./dex-setup.sh` in terminal, restart Kiro, type `/getting-started`.
+
+**What you need to do (existing install):** Run `/dex-update` to pull in the new setup scripts and skill migrations.
+
+---
+
+## [1.18.4] — Kiro-Native Architecture Migration (2026-03-16)
+
+This release rearchitects Dex from Claude Code / Cursor conventions to Amazon Kiro's native paradigms. The previous release (1.18.3) only changed text labels — this one migrates the actual config layer.
+
+**What changed:**
+
+* **`.kiro/steering/` (6 files)** — Replaces `CLAUDE.md` as the source of behavioral truth. Kiro auto-loads these every session. Split into focused files: `product.md` (identity), `behaviors.md` (core Dex behaviors), `sales.md` (BANT, pillars, quota), `structure.md` (vault layout), `tech.md` (MCP architecture, auto-included on demand), `kiro-workflows.md` (how to use Kiro's native features with Dex).
+
+* **`.kiro/hooks/` (4 files)** — Event-driven automation in Kiro's `.kiro.hook` JSON format. Replaces Claude Code's settings.json hook wiring. Hooks: `meeting-capture.kiro.hook` (fires on new meeting notes — extracts BANT, action items, next steps), `person-context.kiro.hook` (injects person context when editing deal/meeting files), `company-context.kiro.hook` (injects account context), `deal-stale.kiro.hook` (flags at-risk deals when you ask about pipeline).
+
+* **`.kiro/agents/` (4 files)** — Sales-specific subagents invokable as `/deal-reviewer`, `/pipeline-analyst`, `/sales-coach`, `/account-researcher`. Each is a focused expert with access to MCP tools and vault data.
+
+* **`.kiro/settings/mcp.json`** — MCP server configuration in Kiro's format (uses `${VAULT_PATH}` env var expansion, `autoApprove` for read-only tools, `disabled: true/false` for optional integrations). Replaces `System/.mcp.json.example` as the active config.
+
+* **`.kiro/skills/` (12 files)** — Core skills migrated to agentskills.io format with Kiro compatibility fields (`compatibility: ["kiro", "claude-code"]`). Skills: daily-plan, daily-review, week-plan, week-review, quarter-plan, quarter-review, meeting-prep, process-meetings, career-coach, project-health, triage, getting-started.
+
+* **`AGENTS.md`** — New workspace-root file using Kiro's cross-tool standard. Auto-loaded by Kiro. Brief identity and navigation guide pointing to steering files.
+
+* **`CLAUDE.md`** — Stripped to a minimal redirect (~25 lines). Full instructions now live in `.kiro/steering/`.
+
+* **`README.md`** — Complete Kiro-only rewrite. Single setup path (Kiro), documents `.kiro/` architecture, skills/agents/hooks reference table, integration guide, troubleshooting.
+
+**What you need to do:** Set `VAULT_PATH` environment variable to your vault path, then restart Kiro. MCP servers will load from `.kiro/settings/mcp.json` automatically.
+
+**Unchanged:** Python MCP servers (`core/mcp/`), Node.js scripts (`.scripts/`, `.claude/hooks/*.cjs`), vault data structure, `System/` config files, templates.
+
+---
+
+## [1.18.3] — Amazon Kiro IDE + Sales Team Customization (2026-03-16)
+
+This release customizes Dex for **sales teams** (ICs, managers, and leaders) using **Amazon Kiro** as the primary IDE and command center.
+
+**What changed:**
+
+* **Amazon Kiro as primary IDE** — README setup instructions now lead with Kiro (kiro.dev) instead of Cursor. Kiro is recommended for sales teams due to its agentic workflow support. Cursor and Claude Code remain fully supported as alternatives.
+* **Sales-focused identity** — CLAUDE.md updated to position Dex as a sales professional's assistant. Tone, context, and behaviors now adapt to sales IC, manager, and leader roles.
+* **Five pre-built sales pillars** — `System/pillars.yaml` now ships with fully configured pillars (Pipeline Development, Deal Execution, Customer Success & Expansion, Team & Coaching, Revenue Strategy & Operations) with keyword lists for automatic task categorization.
+* **Sales meeting intelligence on by default** — `System/user-profile.yaml` enables customer intel, competitive intel, BANT extraction, stakeholder dynamics, objection capture, next-step detection, and deal signal monitoring out of the box.
+* **Quarterly planning enabled by default** — Sales runs on quarters; this is now the default.
+* **Sales-specific folder conventions** — Deals go in `04-Projects/Deals/`, competitors in `06-Resources/Competitive/`, playbooks in `06-Resources/Playbooks/`.
+* **Sales career evidence tags** — New `# Career:` tags for Pipeline Generation, Deal Execution, Customer Expansion, Sales Leadership, Strategic Selling, and Revenue Operations.
+* **Sales configuration block** — `user-profile.yaml` now includes a `sales:` section for role level (IC/manager/leader), quota, CRM, segment, deal motion, and at-risk deal thresholds.
+
+**What you need to do:** Existing users run `/dex-update` to pull in the new pillar and profile templates. New users: setup is unchanged — follow the README.
+
+---
+
 ## [1.18.2] — Fix Background Meeting Sync Installation (2026-03-12)
 
 `install-automation.sh` failed because it referenced two files that no longer exist: `granola-auth.cjs` (deprecated — Granola now stores credentials in `supabase.json` automatically) and `sync-from-granola-v2.cjs` (never shipped — v1 works fine).

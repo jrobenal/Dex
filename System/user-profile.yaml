@@ -15,7 +15,8 @@ role: ""
 
 # Role group (for command filtering and adaptation)
 # Options: product, sales, marketing, finance, engineering, customer_success, operations, leadership, design, support, advisory
-role_group: ""
+# Default for this Kiro/Sales fork: sales
+role_group: "sales"
 
 # Your company (optional, adds context to meeting analysis)
 company: ""
@@ -56,28 +57,35 @@ meeting_processing:
   api_provider: gemini
 
 # Meeting Intelligence Configuration
-# Controls what gets extracted from your meetings (set during onboarding based on role)
+# Controls what gets extracted from your meetings
+# Sales defaults: customer intel, competitive intel, BANT, and stakeholder dynamics are ON
 meeting_intelligence:
-  # Extract customer pain points and challenges
-  extract_customer_intel: false
-  
-  # Extract competitive mentions and comparisons
-  extract_competitive_intel: false
-  
+  # Extract customer pain points and challenges (SALES: always on)
+  extract_customer_intel: true
+
+  # Extract competitive mentions and comparisons (SALES: always on)
+  extract_competitive_intel: true
+
   # Extract action items (always recommended)
   extract_action_items: true
-  
+
   # Extract decisions made (always recommended)
   extract_decisions: true
-  
-  # Extract stakeholder dynamics and relationships
-  extract_stakeholder_dynamics: false
-  
-  # Extract budget, authority, need, timeline (BANT for sales)
-  extract_budget_timeline: false
-  
-  # Extract technical decisions and architecture choices
+
+  # Extract stakeholder dynamics and relationships (SALES: always on)
+  extract_stakeholder_dynamics: true
+
+  # Extract budget, authority, need, timeline (BANT for sales — always on)
+  extract_budget_timeline: true
+
+  # Extract technical decisions and architecture choices (SALES: off by default)
   extract_technical_decisions: false
+
+  # Sales-specific extractions
+  extract_objections: true          # Capture objections raised and how handled
+  extract_next_steps: true          # Flag missing next steps on customer meetings
+  extract_deal_signals: true        # Positive/negative deal momentum signals
+  extract_forecast_changes: true    # Any commit/best-case/pipeline category changes
 
 # Journaling Configuration
 # Controls which journal types are enabled
@@ -92,10 +100,10 @@ journaling:
   weekly: false
 
 # Quarterly Planning Configuration
-# Controls whether you use quarterly goal setting
+# Sales teams always run on quarters — enabled by default in this fork
 quarterly_planning:
-  # Whether quarterly planning is enabled
-  enabled: false
+  # Whether quarterly planning is enabled (SALES: always enabled)
+  enabled: true
   
   # Has user been asked about quarterly planning during onboarding?
   prompted: false
@@ -110,3 +118,45 @@ quarterly_planning:
   # Current quarter dates (auto-calculated)
   quarter_start_date: "2026-01-01"
   quarter_end_date: "2026-03-31"
+
+# Sales Configuration (specific to this Amazon Kiro / Sales fork)
+sales:
+  # Sales role level: ic, manager, or leader
+  # ic = individual contributor (quota-carrying AE, AM, SE, SDR)
+  # manager = frontline sales manager (manages a team of reps)
+  # leader = sales director, VP, CRO, or GM
+  role_level: ""  # Set during onboarding
+
+  # Annual quota (for quota attainment tracking)
+  annual_quota: ""  # Example: "1200000" (in dollars, no commas)
+
+  # Quota currency
+  quota_currency: "USD"
+
+  # CRM system in use (for context in meeting processing)
+  # Options: salesforce, hubspot, dynamics, pipedrive, other, none
+  crm: ""
+
+  # Market segment (for tone and context in planning/reviews)
+  # Options: smb, mid_market, enterprise, strategic, channel, public_sector
+  segment: ""
+
+  # Deal motion
+  # Options: land_and_expand, transactional, solution, consultative, channel
+  deal_motion: ""
+
+  # Primary metric tracked for forecast
+  # Options: arr, mrr, tcv, acv, revenue
+  forecast_metric: "arr"
+
+  # Average sales cycle length (days) — used for deal risk detection
+  avg_sales_cycle_days: 90
+
+  # Days without activity before a deal is flagged as at-risk
+  deal_stale_days: 14
+
+# IDE Configuration
+ide:
+  # Primary IDE for this vault
+  name: "Amazon Kiro"
+  url: "https://kiro.dev"
