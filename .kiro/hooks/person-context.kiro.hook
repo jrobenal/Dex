@@ -1,0 +1,13 @@
+{
+  "enabled": true,
+  "name": "Person Context Injector",
+  "description": "When editing a meeting note or deal file, silently look up person pages for everyone referenced and inject their context (role, BANT status, deal stage, last touch) into the agent's awareness.",
+  "eventType": "fileEdited",
+  "filePatterns": [
+    "00-Inbox/Meetings/*.md",
+    "04-Projects/**/*.md",
+    "04-Projects/Deals/**/*.md"
+  ],
+  "hookAction": "askAgent",
+  "outputPrompt": "This file has just been edited. Before responding or taking any action:\n\n1. Scan the file content for person names (look for capitalized names, email addresses, meeting participant lists)\n2. For each person found, look up their page in 05-Areas/People/ (check Internal/ and External/)\n3. For prospects and customers, also note: deal stage, BANT status, last touch date, agreed next step\n4. Hold this context and reference it naturally in your response — do not announce that you looked them up, and do not show a verbose context block. Just know it and use it.\n\nIf no people are referenced in the file, skip this silently."
+}

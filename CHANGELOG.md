@@ -7,6 +7,34 @@ All notable changes to Dex will be documented in this file.
 
 ---
 
+## [1.18.4] — Kiro-Native Architecture Migration (2026-03-16)
+
+This release rearchitects Dex from Claude Code / Cursor conventions to Amazon Kiro's native paradigms. The previous release (1.18.3) only changed text labels — this one migrates the actual config layer.
+
+**What changed:**
+
+* **`.kiro/steering/` (6 files)** — Replaces `CLAUDE.md` as the source of behavioral truth. Kiro auto-loads these every session. Split into focused files: `product.md` (identity), `behaviors.md` (core Dex behaviors), `sales.md` (BANT, pillars, quota), `structure.md` (vault layout), `tech.md` (MCP architecture, auto-included on demand), `kiro-workflows.md` (how to use Kiro's native features with Dex).
+
+* **`.kiro/hooks/` (4 files)** — Event-driven automation in Kiro's `.kiro.hook` JSON format. Replaces Claude Code's settings.json hook wiring. Hooks: `meeting-capture.kiro.hook` (fires on new meeting notes — extracts BANT, action items, next steps), `person-context.kiro.hook` (injects person context when editing deal/meeting files), `company-context.kiro.hook` (injects account context), `deal-stale.kiro.hook` (flags at-risk deals when you ask about pipeline).
+
+* **`.kiro/agents/` (4 files)** — Sales-specific subagents invokable as `/deal-reviewer`, `/pipeline-analyst`, `/sales-coach`, `/account-researcher`. Each is a focused expert with access to MCP tools and vault data.
+
+* **`.kiro/settings/mcp.json`** — MCP server configuration in Kiro's format (uses `${VAULT_PATH}` env var expansion, `autoApprove` for read-only tools, `disabled: true/false` for optional integrations). Replaces `System/.mcp.json.example` as the active config.
+
+* **`.kiro/skills/` (12 files)** — Core skills migrated to agentskills.io format with Kiro compatibility fields (`compatibility: ["kiro", "claude-code"]`). Skills: daily-plan, daily-review, week-plan, week-review, quarter-plan, quarter-review, meeting-prep, process-meetings, career-coach, project-health, triage, getting-started.
+
+* **`AGENTS.md`** — New workspace-root file using Kiro's cross-tool standard. Auto-loaded by Kiro. Brief identity and navigation guide pointing to steering files.
+
+* **`CLAUDE.md`** — Stripped to a minimal redirect (~25 lines). Full instructions now live in `.kiro/steering/`.
+
+* **`README.md`** — Complete Kiro-only rewrite. Single setup path (Kiro), documents `.kiro/` architecture, skills/agents/hooks reference table, integration guide, troubleshooting.
+
+**What you need to do:** Set `VAULT_PATH` environment variable to your vault path, then restart Kiro. MCP servers will load from `.kiro/settings/mcp.json` automatically.
+
+**Unchanged:** Python MCP servers (`core/mcp/`), Node.js scripts (`.scripts/`, `.claude/hooks/*.cjs`), vault data structure, `System/` config files, templates.
+
+---
+
 ## [1.18.3] — Amazon Kiro IDE + Sales Team Customization (2026-03-16)
 
 This release customizes Dex for **sales teams** (ICs, managers, and leaders) using **Amazon Kiro** as the primary IDE and command center.

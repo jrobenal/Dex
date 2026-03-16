@@ -1,925 +1,322 @@
-# Dex for Sales — Your AI Chief of Staff
+# Dex Sales — AI Chief of Staff for Sales Teams
 
-**A personal operating system for sales professionals, powered by Claude and running in Amazon Kiro.** Pipeline management, deal intelligence, relationship tracking, daily planning, and quota attainment — all configured for sales ICs, managers, and leaders. No coding required.
+**A personal operating system for sales professionals, built for Amazon Kiro.** Pipeline intelligence, meeting extraction, relationship tracking, daily planning, and career development — configured for sales ICs, managers, and leaders.
 
-Built for sales teams using **[Amazon Kiro](https://kiro.dev)** as their AI-native IDE and command center.
-
----
-
-## Setup Overview
-
-**Total time:** ~10 minutes. Three steps: install tools → get the code → tell it your role.
-
-**Recommended IDE:**
-
-| Option | Cost | What It Is |
-|--------|------|------------|
-| **[Amazon Kiro](https://kiro.dev)** ⭐ Recommended | Free during preview | Amazon's AI-native IDE. Purpose-built for agentic workflows. Runs Dex as your sales command center. |
-| **[Claude Code Desktop](https://claude.ai/download)** | Claude Pro $20/month | Anthropic's own app. Excellent experience with guaranteed self-learning hooks and automatic context loading. |
-| **[Cursor](https://cursor.com)** | Free tier works, or $20/month for Pro | A VS Code-based editor with a built-in AI assistant (Claude). |
-| **Claude Code Terminal** | Claude Pro $20/month | Same as Claude Code Desktop but runs in Terminal (Mac) or PowerShell (Windows). |
-
-> **You do NOT go to claude.ai and type commands.** You need one of the apps above. **Amazon Kiro is the recommended starting point for sales teams** — it's purpose-built for agentic AI workflows and runs Dex natively. Claude Code (Desktop or Terminal) is the next-best option with guaranteed hooks.
-
-**Not sure which?** Start with Amazon Kiro — download at [kiro.dev](https://kiro.dev). It's free during preview and gives you the best sales workflow experience with Dex.
+**Primary IDE:** [Amazon Kiro](https://kiro.dev) — AI-native IDE where Dex lives and runs.
 
 ---
 
-## Getting Started
+## What Dex Does for Sales Teams
 
-### What You'll Need to Install (One-Time)
-
-1. **[Amazon Kiro](https://kiro.dev/)** - Download and install (free during preview) — this is your IDE and command center
-2. **[Git](https://git-scm.com)** - Required for setup and updates
-   - **Mac:** Installs automatically when needed (you'll see a prompt)
-   - **Windows:** Download from [git-scm.com/download/win](https://git-scm.com/download/win)
-3. **[Node.js](https://nodejs.org/)** - Download the "LTS" version and install (this enables the system's automation features)
-4. **[Python 3.10+](https://www.python.org/downloads/)** - Download and install (required for MCP servers and task sync)
-   - **Minimum version:** Python 3.10 or newer
-   - **Windows users:** ⚠️ During installation, check the box "Add Python to PATH" - this is critical
-   - **Mac users with old Python:** If you have Python 3.9 or older, download fresh from python.org
-
-All installers walk you through setup with default options.
-
-**Why Python 3.10+?** The MCP SDK (Model Context Protocol) requires Python 3.10 or newer. This powers the Work MCP server that enables task sync - when you check off a task in a meeting note, it updates everywhere automatically (person pages, project files, Tasks.md).
-
-**Mac users:** If this is your first time using command-line tools, macOS will prompt you to install "Command Line Developer Tools" during setup. Click **Install** when prompted - it's safe and required. Takes 2-3 minutes.
-
-### About the Command Line
-
-You'll use something called a "command line" (or "Terminal" on Mac, "PowerShell" on Windows) during setup. This is a text-based way to give your computer instructions - think of it as typing commands instead of clicking buttons.
-
-**Don't worry if this feels unfamiliar.** You'll copy and paste a few commands, press Enter, and you're done. Takes less than 2 minutes.
-
-### Check Your Setup (Optional)
-
-Want to verify everything's ready? Open your command line:
-- **Mac:** Press `Cmd+Space`, type "Terminal", press Enter
-- **Windows:** Press `Win+R`, type "powershell", press Enter
-
-Copy and paste this line **exactly as you see it**, then press Enter:
-
-```bash
-git --version
-```
-
-**You should see a response like:** `git version 2.x.x` (any version number is fine)
-
-**If you see "command not found":** Download Git from [git-scm.com](https://git-scm.com), install it, then close and reopen your command line and try again.
+| Job | What Happens |
+|---|---|
+| **Daily Focus** | `/daily-plan` surfaces your top deals, key meetings, and priority tasks every morning |
+| **Meeting Intelligence** | New meeting notes auto-trigger BANT extraction, action item creation, and person page updates |
+| **Pipeline Health** | `/pipeline-analyst` gives you coverage ratio, forecast breakdown, and at-risk deal flags |
+| **Deal Review** | `/deal-reviewer` runs a full MEDDIC/BANT scorecard on any deal before your review meeting |
+| **Pre-Call Prep** | `/account-researcher` or `/meeting-prep` builds a briefing package before every customer call |
+| **Rep Coaching** | `/sales-coach` prepares coaching agendas from actual call and pipeline activity |
+| **Career Growth** | `/career-coach` captures evidence and tracks your path to the next level |
+| **Weekly Rhythm** | `/week-plan` and `/week-review` keep you anchored to quota and pipeline reality |
 
 ---
 
-Now copy and paste this line, then press Enter:
+## Setup (~10 minutes)
 
-```bash
-node --version
-```
+### What You Need
 
-**You should see a response like:** `v18.x.x` or `v20.x.x` (must be version 18 or higher)
-
-**If you see "command not found":** Download Node.js from [nodejs.org](https://nodejs.org), install it, then close and reopen your command line and try again.
-
----
-
-Finally, check Python:
-
-```bash
-python3 --version
-```
-
-**Windows users:** Try `python --version` if `python3` doesn't work.
-
-**You should see a response like:** `Python 3.10.x` or higher (3.11, 3.12, etc.)
-
-**If you see Python 3.9 or older:** The MCP SDK requires Python 3.10+. Download and install a newer version:
-- **Mac/Windows:** Download from [python.org](https://www.python.org/downloads/) (get the latest stable version)
-- After installing, restart your terminal and check the version again
-
-**If you see "command not found":**
-- **Windows:** Python likely isn't in your PATH. Reinstall from [python.org](https://www.python.org/downloads/) and check "Add Python to PATH" during installation. Restart your terminal after.
-- **Mac:** Download Python from [python.org](https://www.python.org/downloads/), install it, then restart your terminal.
-
-**Why Python 3.10+ matters:** It powers the MCP servers that sync tasks everywhere. Check off a task in a meeting note → it updates in your Tasks.md, person pages, and project files automatically. Python 3.9 and older won't work - you need 3.10 or newer.
-
----
-
-**That's the technical heavy lifting done.** If you got through that, the rest is straightforward - just clicking buttons and answering questions.
+1. **[Amazon Kiro](https://kiro.dev/)** — Download and install (free during preview). This is your IDE and Dex command center.
+2. **[Git](https://git-scm.com)** — Required for setup and updates
+   - Mac: installs automatically when needed (you'll see a prompt)
+   - Windows: download from [git-scm.com/download/win](https://git-scm.com/download/win)
+3. **[Node.js 18+](https://nodejs.org/)** — Download the "LTS" version
+4. **[Python 3.10+](https://www.python.org/downloads/)** — Required for MCP servers
+   - Windows: ⚠️ Check "Add Python to PATH" during installation
+   - Mac: If you have Python 3.9 or older, download fresh from python.org
 
 ### Step 1: Get the Code into Kiro
 
 1. Open **Amazon Kiro**
-2. Press `Cmd+Shift+P` (Mac) or `Ctrl+Shift+P` (Windows) - this opens a search bar at the top
+2. Press `Cmd+Shift+P` (Mac) or `Ctrl+Shift+P` (Windows)
 3. Type **"Git: Clone"** and press Enter
 4. Paste this URL and press Enter:
    ```
    https://github.com/davekilleen/dex.git
    ```
-5. Choose where to save it (your Documents folder works great)
+5. Choose where to save it (Documents folder works great)
 6. Click **Open** when Kiro asks if you want to open the folder
 
-**Using a different IDE?** The same steps work in Cursor and Claude Code Desktop — just substitute the IDE name above.
-
-**Can't get this working?** No problem:
+**Manual alternative:**
 1. Go to [github.com/davekilleen/dex](https://github.com/davekilleen/dex)
 2. Click the green **Code** button → **Download ZIP**
-3. Unzip to your Documents folder (the folder will be named `dex-main`)
-4. In Kiro: **File → Open Folder** → select that `dex-main` folder
+3. Unzip to Documents
+4. In Kiro: **File → Open Folder** → select the `dex-main` folder
 
-### Step 2: Run the Installer
+### Step 2: Set VAULT_PATH
 
-Inside Kiro (or your chosen IDE), you'll see a panel at the bottom (or go to **View → Terminal**). This is where you'll type commands.
+Dex's MCP servers need to know where your vault lives. Set the `VAULT_PATH` environment variable to the full path of the folder you just opened.
 
-Copy and paste this command and press Enter:
+**Mac/Linux** — add to your shell profile (`~/.zshrc` or `~/.bashrc`):
+```bash
+export VAULT_PATH="/Users/yourname/Documents/dex"
+```
+Then run `source ~/.zshrc` (or open a new terminal).
+
+**Windows** — in PowerShell:
+```powershell
+[System.Environment]::SetEnvironmentVariable("VAULT_PATH", "C:\Users\yourname\Documents\dex", "User")
+```
+Then restart Kiro.
+
+### Step 3: Run the Installer
+
+In Kiro, open the terminal panel (**View → Terminal**) and run:
 
 ```bash
 ./install.sh
 ```
 
-**What's happening:** This installs the automation that makes Dex work (task sync, career tracking, meeting intelligence). Takes 1-2 minutes. You'll see text scrolling - that's normal.
+This installs Python and Node.js dependencies. Takes 1-2 minutes. You'll see text scrolling — that's normal.
 
-**When it's done:** You'll see your cursor blinking again, ready for the next command.
-
-⚠️ **IMPORTANT: You're not done yet. Complete Steps 2B and 3 to finish setup.**
-
-**Verify MCP servers:** Kiro (and Cursor/Claude Code) should automatically detect `.mcp.json` and enable the MCP servers. Look for the MCP icon in your IDE's bottom panel - you should see server names with green checkmarks.
-
-**If you see errors:** The most common issue is Python dependencies. First upgrade pip, then install packages:
-
+**If you get Python errors:**
 ```bash
 python3 -m pip install --upgrade pip
 pip3 install --user "mcp>=1.0.0,<2.0.0" pyyaml python-dateutil
 ```
 
-Then restart Kiro (or your IDE).
+### Step 4: Verify MCP Servers
+
+Kiro should automatically detect `.kiro/settings/mcp.json` and load the MCP servers. Look for the MCP panel in Kiro — you should see server names (work-mcp, calendar-mcp, etc.) with green indicators.
+
+If servers show errors, see the [Troubleshooting](#troubleshooting) section below.
+
+### Step 5: Configure Your Role
+
+In Kiro's chat panel, type:
+```
+/getting-started
+```
+
+This runs the onboarding tour. Dex will ask about your role (Sales AE, Account Manager, Sales Manager, VP Sales, etc.), company, and setup preferences. Takes about 5 minutes.
+
+**What gets configured:**
+- Your role level (IC / manager / leader) — adapts Dex's tone and focus
+- Sales pillars — pre-configured with Pipeline Development, Deal Execution, Customer Success & Expansion, Team & Coaching, Revenue Strategy & Operations
+- Meeting intelligence — BANT, competitive intel, objection tracking, deal signals (all on by default for sales)
+- Email domain — routes people to Internal vs External folders
+
+---
+
+## How Dex Works in Kiro
+
+### Steering Files (`.kiro/steering/`)
+
+Steering files load automatically every Kiro session and give Dex persistent context about who you are and how to behave. You don't need to think about them — they just work.
+
+To manually load one, type `#` in chat:
+- `#product` — Identity and role adaptation
+- `#sales` — BANT extraction, pillar keywords, quota awareness
+- `#behaviors` — Core Dex behaviors and MCP tools
+- `#structure` — Vault folder layout
+- `#tech` — Technical architecture (load when troubleshooting)
+
+### Skills (Type `/` in Chat)
+
+Skills are commands you invoke for specific workflows:
+
+| Skill | When to Use |
+|---|---|
+| `/daily-plan` | Every morning — surfaces pipeline priorities, meetings, tasks |
+| `/daily-review` | End of day — captures wins, action items, learning |
+| `/week-plan` | Monday morning — set top 3 priorities vs pipeline reality |
+| `/week-review` | Friday — concrete accomplishments, pipeline progress |
+| `/quarter-plan` | Start of quarter — quota goals, territory strategy |
+| `/quarter-review` | End of quarter — QBR prep, wins/losses, next quarter |
+| `/meeting-prep` | Before any customer call — attendee context, talk tracks |
+| `/process-meetings` | After meetings — extract BANT, action items, update pages |
+| `/career-coach` | Career development — evidence, skill gaps, promotion readiness |
+| `/project-health` | Deal and account health check |
+| `/triage` | Clear inbox — route captures, extract tasks |
+| `/getting-started` | First-time setup and feature tour |
+
+### Custom Agents (Type `/` in Chat)
+
+Agents run focused multi-step workflows with specialized intelligence:
+
+| Agent | When to Use |
+|---|---|
+| `/deal-reviewer` | Before deal review meetings — full MEDDIC/BANT scorecard, gaps, next actions |
+| `/pipeline-analyst` | Before forecast calls — coverage ratio, at-risk flags, forecast breakdown |
+| `/sales-coach` | Before rep 1:1s — coaching agenda from actual call and pipeline activity |
+| `/account-researcher` | Before any important customer call — full briefing package |
+
+### Hooks (Automatic)
+
+These fire automatically without you doing anything:
+
+| Hook | Trigger | What Happens |
+|---|---|---|
+| **Meeting Auto-Extract** | New file in `00-Inbox/Meetings/` | Extracts BANT, action items, objections, next steps. Flags missing next step. |
+| **Person Context** | Editing a meeting note or deal file | Looks up person pages for everyone referenced |
+| **Company Context** | Editing a meeting note or deal file | Looks up account pages and injects deal history |
+| **Deal Stale Detector** | You ask about pipeline/forecast | Flags deals with no activity in 14+ days |
+
+### Kiro Specs for Deal Planning
+
+Use Kiro's built-in **Specs** feature (`.kiro/specs/`) for complex account plans and QBR prep:
+- Start a spec: tell Kiro "Let's build an account plan for [Company Name]"
+- Kiro walks you through requirements → design → tasks → execution
+- Version-controlled, shareable deal artifacts
+
+---
+
+## Vault Structure
+
+```
+00-Inbox/Meetings/        Meeting notes (hooks process these automatically)
+01-Quarter_Goals/         Quota targets and quarterly OKRs
+02-Week_Priorities/       Weekly top 3 priorities
+03-Tasks/Tasks.md         Task backlog (synced across all files)
+04-Projects/Deals/        Active deals (one folder per deal)
+05-Areas/People/
+  Internal/               Teammates, managers, direct reports
+  External/               Prospects, customers, partners
+05-Areas/Companies/       Account pages
+06-Resources/
+  Competitive/            Competitor battle cards
+  Playbooks/              Sales playbooks
+07-Archives/              Closed deals, past accounts
+System/                   Configuration (user-profile.yaml, pillars.yaml)
+.kiro/                    Kiro configuration (steering, hooks, agents, skills)
+```
+
+---
+
+## Integrations
+
+Connect your tools via the MCP servers in `.kiro/settings/mcp.json`. Enable by setting `"disabled": false`:
+
+| Tool | Server | What It Adds |
+|---|---|---|
+| **Granola** | `granola-mcp` | Auto-sync meeting transcripts (enabled by default) |
+| **Google Calendar** | `calendar-mcp` | Show real meetings in daily plans (Mac — enabled by default) |
+| **Slack** | `slack-mcp` | Slack context in meeting prep |
+| **Google Workspace** | `google-workspace-mcp` | Gmail and Docs integration |
+| **Salesforce / HubSpot** | `/integrate-mcp` | CRM data in deal reviews |
+| **Zoom** | `zoom-mcp` | Meeting recording context |
+| **Atlassian** | `atlassian-mcp` | Jira/Confluence integration |
+| **Todoist / Things** | `todoist-mcp`, `things3-mcp` | Bi-directional task sync |
+
+For Salesforce and HubSpot, use `/integrate-mcp` to find and configure the right MCP server from the Smithery.ai marketplace.
+
+---
+
+## Troubleshooting
 
 <details>
-<summary><strong>Use Google Calendar? Connect it so Dex shows your meetings (Mac)</strong></summary>
+<summary><strong>MCP Servers Not Loading in Kiro</strong></summary>
 
-If you use **Google Calendar**, you can have Dex show your real meetings when you run `/daily-plan` or ask "what's on my calendar today?" Two steps, one-time setup (Mac only):
+If you see red error indicators next to MCP server names:
 
-**Step 1 — Add Google to your Mac's Calendar app**  
-Open the **Calendar** app (the one that came with your Mac). In the menu bar, click **Calendar** → **Add Account…** → choose **Google** → sign in with your Google account. Your Google events will sync into Calendar. Dex reads from this app, so once Google is here, Dex sees your meetings.
+**"No server info found" or Python errors:**
+```bash
+python3 -m pip install --upgrade pip
+pip3 install --user "mcp>=1.0.0,<2.0.0" pyyaml python-dateutil
+```
+Then restart Kiro completely.
 
-**Step 2 — Let your IDE use your calendar**
-Open **System Settings** → **Privacy & Security** → **Calendars**. Turn **Kiro** (or Cursor/Claude Code, whichever IDE you're using) on, then choose **Full** access (not "Add Only") so Dex can read your events. If macOS pops up asking for calendar access, click **Allow**.
+**"Command 'python' not found":**
+Open `.kiro/settings/mcp.json` and change `"command": "python"` to `"command": "python3"` (or vice versa on Windows). Restart Kiro.
 
-That's it. The installer already set up the rest on Mac. Your meetings—including recurring ones like weekly 1:1s—will show on the correct days in Dex.
-
-**More detail and troubleshooting:** [Calendar_Setup.md](06-Resources/Dex_System/Calendar_Setup.md) (in your vault after setup).  
-**On Windows?** Calendar connection is supported on Mac via Apple Calendar. We don't have Windows instructions in this repo yet.
+**VAULT_PATH not set:**
+Ensure you've set the `VAULT_PATH` environment variable (Step 2 above) and restarted Kiro after setting it.
 
 </details>
 
-⚠️ **IMPORTANT: Complete Step 3 now to configure your role - this is what makes Dex work.**
-
 <details>
-<summary><strong>Troubleshooting: Common Setup Issues</strong></summary>
-
-### Mac: "Command Line Developer Tools" prompt
+<summary><strong>Mac: "Command Line Developer Tools" prompt</strong></summary>
 
 If you see a popup asking to install "Command Line Developer Tools":
+1. Click **Install** — safe and required for git
+2. Wait 2-3 minutes for it to complete
+3. Run `./install.sh` again
 
-1. **Click Install** - This is safe and necessary for git to work
-2. **Wait 2-3 minutes** - The installer downloads and installs automatically
-3. **Setup continues automatically** - Once tools are installed, the script resumes
-
-This only happens once. Future updates won't need this.
-
-**What if I accidentally clicked "Cancel"?**
-
-Run this command, then run `./install.sh` again:
-
-```bash
-xcode-select --install
-```
-
----
-
-### Windows: "python is not recognized" or "pip is not recognized"
-
-This means Python wasn't added to your PATH during installation.
-
-**Fix:**
-
-1. Uninstall Python (Control Panel → Programs)
-2. Download fresh installer from [python.org](https://www.python.org/downloads/)
-3. Run installer
-4. ⚠️ **CHECK THE BOX: "Add Python to PATH"** (on first screen)
-5. Complete installation
-6. **Restart your terminal completely** (close and reopen)
-7. Run `./install.sh` again
-
----
-
-### Windows: "git is not recognized"
-
-Git for Windows isn't installed.
-
-**Fix:**
-
-1. Download from [git-scm.com/download/win](https://git-scm.com/download/win)
-2. Run installer with default options
-3. **Restart your terminal**
-4. Run `./install.sh` again
-
----
-
-### All Platforms: "Could not install Python dependencies"
-
-The installer tries two methods automatically. If both fail, your pip version might be too old.
-
-**Fix (upgrade pip first, then install):**
-
-```bash
-python3 -m pip install --upgrade pip
-pip3 install --user "mcp>=1.0.0,<2.0.0" pyyaml python-dateutil
-```
-
-**Windows:**
-
-```bash
-python -m pip install --upgrade pip
-pip install --user "mcp>=1.0.0,<2.0.0" pyyaml python-dateutil
-```
-
----
-
-### MCP Servers Show Errors in Kiro / Cursor
-
-If you see red error indicators next to MCP server names in Cursor:
-
-**"No server info found" error:**
-
-This means the Python MCP servers can't start. Most common fix (upgrade pip first):
-
-```bash
-python3 -m pip install --upgrade pip
-pip3 install --user "mcp>=1.0.0,<2.0.0" pyyaml python-dateutil
-```
-
-Then **restart Cursor completely** (Cmd+Q and reopen, or File → Quit).
-
-**If you get "ERROR: Could not find a version that satisfies the requirement mcp":**
-
-Your pip is too old. Run the pip upgrade command above first, then try installing packages again.
-
-**"Command 'python' not found" error:**
-
-Your `.mcp.json` might have the wrong Python command. Open `.mcp.json` in your vault and change all instances of:
-
-```json
-"command": "python"
-```
-
-to:
-
-```json
-"command": "python3"
-```
-
-(Or vice versa on Windows - use whichever command works in your terminal)
-
-Then restart Cursor.
-
-**Still not working?**
-
-Check the MCP server output:
-1. Click the error indicator in Cursor's MCP panel
-2. Click "Show Output"
-3. Look for the specific error message
-4. Common issues: missing Python packages, wrong file paths, Python version too old
-
----
-
-### Mac: Calendar empty, wrong dates, or "Calendar access denied"
-
-If `/daily-plan` doesn't show your meetings, or your recurring meetings (e.g. weekly 1:1s) show on the wrong day or are missing:
-
-1. **Add Google to the Calendar app** — Open **Calendar** (Mac's built-in app) → **Calendar** → **Add Account…** → **Google** → sign in. Dex reads from this app.
-2. **Let Cursor see your calendar** — **System Settings** → **Privacy & Security** → **Calendars** → turn **Cursor** on, then click **Cursor** and set access to **Full** (not "Add Only"). Restart Cursor after changing it.
-3. **If you skipped the installer or fixed Python yourself** — The installer normally sets up calendar support on Mac. If you didn't run it or installed packages by hand, in Terminal run: `pip3 install --user pyobjc-framework-EventKit`, then restart Cursor.
-
-See **[Calendar_Setup.md](06-Resources/Dex_System/Calendar_Setup.md)** for the full guide.
+If you accidentally clicked Cancel: run `xcode-select --install` then retry.
 
 </details>
-
-### Step 3: Tell Dex About Your Role
-
-In Cursor, look for a **chat panel** (usually on the right side of the screen). This is Claude - your AI assistant.
-
-**Here's exactly what to do:**
-
-1. **Click inside the chat panel** where it says "Message Claude..." or similar
-2. **Type exactly this:** `/setup`
-3. **Press Enter** - This invokes the setup skill
-4. **Wait ~30 seconds** - First time setup needs to load everything (you'll see "Thinking..." while it works)
-5. **Press Enter again** - Claude will now start asking questions
-6. **Answer each question naturally:**
-   - What's your role? (e.g., "CFO", "VP Sales", "Product Manager")
-   - Company size?
-   - What are your main focus areas?
-
-Just type your answers like you're texting a colleague. Takes about 2 minutes total.
-
-**When it's done:** You'll see confirmation that your workspace is configured. All folders, commands, and automation are now tailored to your specific role.
-
----
-
-## Three Ways to Access Claude
-
-You just used **Cursor** to run setup. That works great for daily use.
-
-There's also **Claude Code** - a more powerful option available via command line or Desktop app. Both give you **guaranteed hooks** (automatic behaviors that run deterministically, unlike CLAUDE.md which Claude might skip).
-
-| Access Method | What You Get | Hooks? | Setup |
-|--------------|--------------|--------|-------|
-| **Cursor** | Easy, already working | No | Already done |
-| **Claude Code** (command line) | Guaranteed hooks, persistent learning | Yes | 5 min install |
-| **Claude Code** (Desktop app) | Guaranteed hooks, persistent learning | Yes | 5 min install |
-
-**What are hooks?** Automatic behaviors triggered by events (session start, file read, etc.). They're deterministic - they ALWAYS run. Context loads guaranteed, learnings surface guaranteed, person details inject guaranteed.
-
-**Which to use?**
-- **Start with Cursor** - you're already set up
-- **Add Claude Code later** if you want guaranteed automation
-
-### What You Get With Each
-
-**Cursor:**
-- ✓ Full vault access
-- ✓ Multiple terminal windows for parallel work
-- ✓ Works immediately
-- ✗ No guaranteed hooks (context loading is probabilistic)
-
-**Claude Code (command line or Desktop):**
-- ✓ Everything Cursor does
-- ✓ PLUS guaranteed hooks for persistent learning and automatic context
-
-| Hook Example | What It Does |
-|--------------|--------------|
-| **Session start** | Loads Quarter Goals, Week Priorities, Strategic Pillars, Urgent Tasks automatically |
-| **Person context** | When Sarah is mentioned in a file, her person page context injects automatically |
-| **Company context** | When Acme Corp is referenced, company page details inject automatically |
-| **Mistake patterns** | Surfaces active patterns so Claude avoids repeating them |
-| **Learning reminders** | Prompts review when you have 5+ unreviewed learnings |
-
-**Command line vs Desktop:** Same core capabilities, different interfaces. Command line is text-based terminal. Desktop is a GUI with visual session management and side-by-side diffs.
-
-**Bottom line:** Cursor works great and is what most people use. Claude Code guarantees hooks run every time, making the system more intelligent and persistent. Many people use both - Cursor for heavy editing, Claude Code for workflows where reliability matters.
-
-[Full hooks documentation →](https://code.claude.com/docs/en/hooks)
-
----
-
-## Want Guaranteed Hooks? Use Claude Code (CLI or Desktop App)
-
-You're already set up with Cursor. If you want guaranteed hooks (automatic context loading every session), here are your two options:
-
-### Option 1: Claude Desktop App
-
-If you prefer visual interfaces over command line, use the Desktop app.
-
-**Requirements:**
-- Claude Pro ($20/month) or Max ($100-200/month, 5-20x higher usage limits) subscription - free Claude accounts don't have access to Claude Code
-
-**Setup (2 minutes):**
-
-1. Download from [claude.ai/download](https://claude.ai/download)
-2. Install and open the app
-3. Log in with your Claude Pro or Max account
-4. Click the **Code** tab (top left)
-5. Select your Dex folder to start a session
-
-**That's it.** Hooks run automatically - session start context loads, person details inject when mentioned, mistake patterns surface.
-
-**Desktop app benefits:**
-- **Visual interface** - See all sessions, review changes with side-by-side diffs
-- **Multiple parallel sessions** - Click "+ New session" to work on different tasks simultaneously
-- **Built-in integrations** - Connect Calendar, Slack, GitHub without manual configuration
-- **Same guaranteed hooks** as command line
-
----
-
-### Option 2: Command Line
-
-For those comfortable working in Terminal (Mac) or PowerShell (Windows), Claude Code runs from the command line.
-
-**Requirements:**
-- Claude Pro ($20/month) or Max ($100-200/month, 5-20x higher usage limits) subscription - free Claude accounts don't have access to Claude Code
-
-**Step 1: Install**
-
-You can install from your system's native terminal or from within Cursor (easiest since you're already there).
-
-**Option A: Native Terminal/PowerShell**
-
-**Mac - Terminal:**
-```bash
-curl -fsSL https://claude.ai/install.sh | bash
-```
-
-**Windows - PowerShell:**
-```powershell
-irm https://claude.ai/install.ps1 | iex
-```
-
-**Option B: From Inside Cursor (Easiest)**
-
-1. In Cursor, go to **View → Terminal** (opens a panel at the bottom)
-2. Copy and paste the command for your system:
-
-**Mac:**
-```bash
-curl -fsSL https://claude.ai/install.sh | bash
-```
-
-**Windows:**
-```powershell
-irm https://claude.ai/install.ps1 | iex
-```
-
-The installer automatically updates itself in the background to keep you current.
-
-**Step 2: Authenticate**
-
-In your terminal (native or Cursor's), run:
-
-```bash
-claude auth
-```
-
-This opens your browser. Log in with your Claude Pro or Max account.
-
-**Step 3: Start Claude Code**
-
-From your terminal, navigate to your Dex folder and run `claude`.
-
-**Note:** Folder name depends on how you got the code:
-- If you **cloned via Git**: folder is named `dex`
-- If you **downloaded ZIP**: folder is named `dex-main`
-
-**Mac:**
-```bash
-cd ~/Documents/dex        # or dex-main if you downloaded ZIP
-claude
-```
-
-**Windows:**
-```cmd
-cd %USERPROFILE%\Documents\dex        # or dex-main if you downloaded ZIP
-claude
-```
-
----
-
-**Need help?** See [official Claude Code setup docs](https://code.claude.com/docs/en/setup) for troubleshooting.
-
-**Which option?** Desktop app for visual interface. Command line for those comfortable in Terminal/PowerShell. Both give you the same guaranteed hooks capability.
-
----
-
-## Who This Is For
-
-Non-engineers. Product managers, marketers, sales leaders, designers, executives, HR leaders, consultants, coaches, analysts — anyone who wants the same leverage from AI that technical people have had access to.
-
-**You don't need to know how to code.** Just follow the setup above and talk to your AI assistant.
-
-**If you're an engineer:** Share this with your non-technical colleagues. Distribute Dex across your organization to accelerate AI fluency adoption.
-
-**Want to share this?** Point colleagues to the [companion blog post](https://www.linkedin.com/pulse/your-ai-chief-staff-building-personal-operating-system-dave-killeen-yxnqe/) for the full story. At the bottom of this README, there's a ready-to-use message you can copy and paste.
-
----
-
-## What It Actually Does
-
-Eight jobs that happen reliably every day:
-
-| Job | What It Solves |
-|-----|----------------|
-| **Start Each Day Focused** | One command gives you three priorities. Heavy meeting day? Drops to two. Won't let you overcommit. |
-| **Never Miss a Commitment** | Promises made in meetings extracted automatically. Three days old? Flagged. You can't forget. |
-| **Track Relationships** | Before any call: what you discussed last time, open items, what they care about. Never walk in cold. |
-| **Accelerate Career Growth** | Captures evidence automatically. Feedback from 1:1s, achievements, skills growth. Review-ready when you need it. |
-| **Manage Tasks Reliably** | Work MCP syncs tasks with unique IDs across all files. Check off once, updates everywhere. Deduplication prevents doubles. Priority limits stop overcommit. Strategic alignment required. |
-| **Reflect & Improve** | Captures mistakes → rules. Learns preferences. Each session makes the next better. |
-| **Keep Projects Moving** | Auto-detects stalls (12+ days no update). Surfaces blockers. You know what needs attention. |
-| **Evolve Itself** | System suggests improvements based on usage patterns. Monitors Claude Code releases daily - when new capabilities drop, explains what they mean for YOUR system and suggests implementations. Captures your improvement ideas too. AI ranks all by impact. `/dex-improve` plans implementation. System adapts to you. |
-
-**Want deeper context?** See [Dex_Jobs_to_Be_Done.md](06-Resources/Dex_System/Dex_Jobs_to_Be_Done.md) for the full framework.
-
----
-
-## What's Included
-
-Out of the box, working immediately:
-
-- **8 core capabilities** - Daily focus, relationship tracking, commitment management, career evidence, task sync that actually works, learning system, project health monitoring, system evolution (see jobs table above)
-- **Complete planning system** - Quarterly goals → weekly priorities → daily plans, all connected with rollup tracking
-- **25+ ready-to-use skills** - `/daily-plan`, `/meeting-prep`, `/career-coach`, `/week-review` and more - invoke with `/skill-name`
-- **Role-based setup** - 31 roles from CEO to IC, scaffolds appropriate folder structure and workflows. Onboarding MCP enforces validation (email domain required for Internal/External person routing) with session resume capability
-- **Meeting intelligence** - Process transcripts into structured notes with action items auto-synced. Works with Granola MCP (included), or paste transcripts from any source - system recognizes and processes them
-- **Task management with unique IDs (Work MCP)** - Tasks sync everywhere automatically (meeting notes, person pages, project files). Check off once, updates everywhere. Deduplication prevents doubles. Priority limits stop overcommit.
-- **Career development coach** - Captures evidence automatically, prepares reviews, assesses promotion readiness
-- **Person & company pages** - Relationship context for individuals + organization-level rollups (contacts, meetings, tasks)
-- **Compound learning** - Captures preferences and mistakes. Every session makes the next one better.
-- **Self-upgrading system** - Checks for new Claude Code features daily. When detected, explains what they mean for YOUR system and suggests implementations. Like having a concierge who reads release notes you'll never read.
-- **Feature discovery** - `/dex-level-up` suggests capabilities you haven't tried yet based on your usage patterns
-
-## The Journey to Competitive Advantage
-
-**Week 1:** Use the scaffolded system. Value is immediate - commitments don't slip, meetings have context, day starts focused. System teaches you as you go.
-
-**Week 2:** Start extending. Tell Claude what you need, it builds it. Not coding - just describing. Add integrations, customize workflows, adapt to your exact role.
-
-**Month 1:** You're thinking like a builder. Understanding capabilities, spotting opportunities to automate, designing systems. AI fluency - the kind that compounds.
-
-**Why this matters:** Time saved → invested in learning → deeper fluency → more sophisticated builds → greater impact → career advantage. The gap is widening now. People building these systems in Q1 2026 will have a year's advantage by summer.
-
-**Total investment:** 30 minutes to set up. Two weeks to competence. The fluency compounds weekly.
-
----
-
-## Conversational Capture
-
-Ideas die between having them and recording them. Deciding where things belong kills momentum.
-
-Dex handles this through natural conversation. Just tell Claude things naturally:
-
-```
-You: "Sarah seemed worried about timeline but interested in Q2 pilot"
-
-Claude: "I see you have 'Sarah's team onboarding' and 'Q2 Planning' 
-in your Week Priorities. Should I add this to Sarah's person page 
-and the Q2 Planning project?"
-
-You: "Yes"
-```
-
-That's it. No special commands. No files to organize.
-
-**Strategic intelligence:**
-- Loads your Week Priorities and Quarterly Goals
-- Suggests routing based on what you're actually focused on
-- "Mobile app pricing" → sees "Mobile App Launch" in priorities → HIGH confidence
-- Person mentioned in priorities → routing gets confidence boost
-
-One decision instead of many. Immediate filing.
-
----
-
-## Career Development That Compounds
-
-Great work happens daily, but evidence disappears. Review time becomes a scramble to remember what you accomplished.
-
-Run `/career-setup` once (job description, career ladder, recent review, growth goals). From that point forward, Dex automatically captures career evidence:
-
-| When | What Gets Captured |
-|------|-------------------|
-| Daily reviews | Achievements worth saving for promotion discussions |
-| Manager 1:1s (via Granola) | Feedback and development context |
-| Project completions | Impact and skills demonstrated |
-| Weekly reviews | Work tagged with career skills |
-
-### Your Personal Career Coach
-
-Run `/career-coach` anytime for:
-
-| Mode | What It Does |
-|------|--------------|
-| **Weekly Report** | Generate professional update for your manager in 30 seconds |
-| **Monthly Reflection** | Spot patterns — what's working, where to focus |
-| **Self-Review** | Build annual review from accumulated evidence |
-| **Promotion Assessment** | Gap analysis with specific development plan |
-
-The coach adapts to your career level. Evidence compounds. The longer you use it, the more powerful it becomes.
-
-Your data stays on your laptop. It's yours.
-
----
-
-## Task Sync That Actually Works
-
-Tasks in multiple places (meeting notes, project files, person pages) don't sync in traditional systems. Check off one, others stay open.
-
-Dex handles this with the **Work MCP server** - a Python-based automation layer that syncs tasks with unique IDs across your entire vault. When you process a meeting, action items get IDs like `^task-20260128-001`. Tasks appear in both the meeting note and `03-Tasks/Tasks.md` with the same ID.
-
-Just tell Dex what you finished in natural language:
-- "I finished following up with John"
-- "Mark the proposal done"  
-- "Completed the API docs"
-
-The Work MCP finds the ID, updates everywhere automatically (Tasks.md, meeting notes, person pages, project pages), adds timestamp: `✅2026-01-28 14:35`.
-
-No manual syncing. No duplicates getting out of sync. One source of truth.
-
-**This is why Python installation is required** - the Work MCP server is the automation engine that makes task sync reliable and automatic.
-
----
-
-## How the Planning System Works
-
-Everything connects — from strategic pillars down to today's work:
-
-```mermaid
-%%{init: {'theme': 'neutral'}}%%
-flowchart TD
-    A[Strategic Pillars] --> B[Quarter Goals]
-    B --> C[Week Priorities]
-    C --> D[Daily Plan]
-    B -.-> E[Tasks.md]
-    A -.-> E
-    C -.-> E
-    E --> D
-    D --> F[Daily Review]
-    F -.Tomorrow.-> D
-    
-    style A fill:#e1f5e1
-    style B fill:#ffe1e1
-    style C fill:#e1e1ff
-    style D fill:#fff5e1
-```
-
-**Strategic Pillars** (your focus areas) → **Quarter Goals** (3-5 outcomes over 3 months) → **Week Priorities** (Top 3 this week) → **Daily Plan** (today's work) → **Tasks.md** (backlog tagged to goals).
-
-Work backwards from career impact: *What would make you incredibly happy you accomplished three months from now?* Quarterly goals become the north star connecting daily work to career-defining outcomes.
-
-See [Dex_System_Guide.md](06-Resources/Dex_System/Dex_System_Guide.md) for details.
-
----
-
-## Built-In Feature Discovery
-
-You're likely using 20% of the system's capabilities because you don't know what you don't know.
-
-Run `/dex-level-up` for progressive disclosure based on your actual usage. The system tracks which features you've used (stored locally in `System/usage_log.md`). When you run the command, it:
-
-1. Analyzes your usage patterns - what you're already doing consistently
-2. Identifies natural next steps - features that build on current habits
-3. Shows 2-3 specific suggestions - never overwhelming, always relevant
-4. Adapts to experience level - beginners get basics, power users get advanced features
-
-Week 1: suggests daily review workflows. Week 3: suggests custom MCP integrations.
-
-The system teaches you progressively. You learn what you need, when you need it.
-
----
-
-## Demo Mode
-
-Want to explore without adding your data? Want to show colleagues what's possible before they commit?
-
-Run `/dex-demo on` for pre-populated sample content that demonstrates **all 8 Jobs to Be Done**:
-
-**What's included:**
-- **Career Development System** - Role definition, career ladder (L4→L5), performance reviews, growth goals, evidence library
-- **Full Week of Planning** - Daily plans (Mon-Fri), weekly plan, morning/evening journals, weekly reflection  
-- **Learning & Reflection** - Working preferences, mistake patterns, session learnings, pattern recognition
-- **Company Intelligence** - Acme Corp page aggregating contacts, meetings, and tasks across the organization
-- **Active Projects** - Mobile launch (high-stakes), portal redesign, API partnerships
-- **Meeting Intelligence** - Week of notes with scattered tasks for `/triage` to demonstrate cleanup workflow
-- **System Evolution** - Improvement backlog with 10 AI-ranked ideas, usage tracking, orphaned ideas
-- **People & Relationships** - 5 person pages (internal/external) with meeting history and context
-
-Everything happens in `System/Demo/` - your real vault stays untouched. Run `/dex-demo off` to switch back. Reset demo content anytime with `/dex-demo reset`.
-
-Useful for:
-- Exploring features risk-free before adding real data (see all 8 Jobs in action)
-- Demoing to colleagues - show what AI systems can do beyond chat
-- Driving AI fluency across your team without setup friction
-- Testing new workflows and commands (`/career-coach`, `/dex-backlog`, etc.)
-
----
-
-## The System That Improves Itself
-
-The system captures learnings and improves over time:
-
-- Run `/daily-review` - captures learnings to `System/Session_Learnings/`
-- Weekly synthesis (`/week-review`) - turns learnings into system improvements
-- Background automation - checks for new Claude Code features daily
-- Run `/dex-whats-new` - surfaces learnings and new capabilities you can use
-
-What gets captured:
-- Mistake patterns become rules that prevent repetition
-- Working preferences (communication style, meeting habits, tool choices)
-- System improvements - AI suggests implementations based on your usage
-
-Day 1: helpful but generic. Week 2: knows your preferences, catches common mistakes. Month 1: adapted to your specific work style.
-
-Each session makes the next one better.
-
----
-
-## Supported Roles
-
-31 role configurations. The scaffolding changes completely based on your answer.
 
 <details>
-<summary>View all roles</summary>
+<summary><strong>Windows: Python or Git not recognized</strong></summary>
 
-**Core Functions:** Product Manager, Sales, Marketing, Engineering, Design
+**Python not recognized:**
+1. Uninstall Python (Control Panel → Programs)
+2. Download fresh from [python.org](https://www.python.org/downloads/)
+3. ⚠️ Check "Add Python to PATH" on the first installer screen
+4. Restart your terminal
+5. Run `./install.sh` again
 
-**Customer-Facing:** Customer Success, Solutions Engineering
+**Git not recognized:**
+1. Download from [git-scm.com/download/win](https://git-scm.com/download/win)
+2. Install with default options
+3. Restart terminal
+4. Run `./install.sh` again
 
-**Operations:** Product Operations, RevOps/BizOps, Data/Analytics
+</details>
 
-**Support Functions:** Finance, People (HR), Legal, IT Support
+<details>
+<summary><strong>Mac: Calendar empty or wrong dates</strong></summary>
 
-**Leadership:** Founder
+1. Open **Calendar** (Mac's built-in app) → **Calendar menu** → **Add Account** → **Google** → sign in
+2. Open **System Settings** → **Privacy & Security** → **Calendars** → turn on **Kiro** → set to **Full** access
+3. Restart Kiro
 
-**C-Suite:** CEO, CFO, COO, CMO, CRO, CTO, CPO, CIO, CISO, CHRO, CLO, CCO
+If you installed Python packages manually (not via `./install.sh`): run `pip3 install --user pyobjc-framework-EventKit` then restart Kiro.
 
-**Independent:** Fractional CPO, Consultant, Coach
+Full guide: `06-Resources/Dex_System/Calendar_Setup.md`
 
-**Investment:** Venture Capital / Private Equity
+</details>
+
+<details>
+<summary><strong>Hooks Not Firing</strong></summary>
+
+If meeting notes aren't being auto-processed or context isn't being injected:
+
+1. Check that hook files exist: `.kiro/hooks/*.kiro.hook`
+2. In Kiro, go to **Settings** and verify hooks are enabled for the workspace
+3. Try manually running `/process-meetings` as a fallback
+
+Note: The backing scripts for context injection are in `.claude/hooks/*.cjs` — these require Node.js to be installed.
 
 </details>
 
 ---
 
-## What It Costs
-
-| Item | Cost |
-|------|------|
-| Cursor Pro | $20/month (Claude included) |
-| Cursor Free | $0 (limited usage, enough to try it) |
-| Time | 10 minutes to set up |
-| Coding skills | None required |
-
----
-
-## Documentation
-
-Comprehensive guides included in the repo:
-
-- [Dex_System_Guide.md](06-Resources/Dex_System/Dex_System_Guide.md) - Complete feature reference and workflows
-- [Dex_Jobs_to_Be_Done.md](06-Resources/Dex_System/Dex_Jobs_to_Be_Done.md) - Why each piece exists and how they connect
-- [Dex_Technical_Guide.md](06-Resources/Dex_System/Dex_Technical_Guide.md) - Technical deep dive for those who want it
-- [Calendar_Setup.md](06-Resources/Dex_System/Calendar_Setup.md) - Connect Google Calendar to Dex (Mac)
-- [Folder_Structure.md](06-Resources/Dex_System/Folder_Structure.md) - PARA organization explained
-- [Updating_Dex.md](06-Resources/Dex_System/Updating_Dex.md) - How to safely update while preserving customizations
-
-Start with what you need. Go deeper if you're curious. No forced learning paths.
-
-These guides live in your vault after setup.
-
----
-
-## Updating Dex
-
-**Get updates with one command - no technical knowledge needed.**
-
-### Automatic Notifications
-
-Dex checks for updates every 7 days during `/daily-plan`:
-
-```
-🎁 Dex v1.3.0 is available. Run /dex-update to see what's new and update.
-```
-
-### Update in One Command
+## Keeping Dex Updated
 
 ```
 /dex-update
 ```
 
-**That's it.** Dex shows you what's new, you confirm, and then it handles everything:
-- ✓ Downloads latest version
-- ✓ Protects your data (never touches notes/tasks/projects)
-- ✓ Handles conflicts automatically
-- ✓ Creates safety backup
-- ✓ Shows progress at every step
+Run this anytime in Kiro chat. It checks for updates, shows what changed, and updates with your confirmation. Your personal customizations in `CLAUDE.md` (the `USER_EXTENSIONS` block) are always preserved.
 
-**Time:** 2-5 minutes  
-**Technical knowledge:** None  
-**Risk:** Zero - your data is always safe
-
-### If Something Goes Wrong
-
-```
-/dex-rollback
-```
-
-Instantly restores the previous version.
-
-### Your Data Is Protected
-
-Updates never touch:
-- Your notes, tasks, projects, people pages
-- Your configuration (pillars, user profile)
-- Your customizations
-- Your API keys
-
-**For detailed instructions:** See [Updating_Dex.md](06-Resources/Dex_System/Updating_Dex.md)
+To undo an update: `/dex-rollback`
 
 ---
 
-## AI Model Options (Optional)
+## System Files
 
-Dex works with Claude by default, but you can also use cheaper cloud models or offline local models.
-
-**Why configure alternatives?**
-- **Save money:** Budget cloud models cost 80-97% less for routine tasks
-- **Work offline:** Download a model to use on planes, trains, or without internet
-- **Privacy:** Local models keep your data on your computer
-
-**Configure your options:**
-
-```
-/ai-setup
-```
-
-**What this offers:**
-- **Budget Cloud** — Kimi K2.5, DeepSeek (~$5-10 upfront, then very cheap)
-- **Offline Mode** — Qwen 2.5 running locally (free forever, requires 8GB+ RAM)
-- **Smart Routing** — Automatically pick the best model per task
-
-**Check your configuration:**
-
-```
-/ai-status
-```
-
-**For detailed guide:** See [AI_Model_Options.md](06-Resources/Dex_System/AI_Model_Options.md)
+| File | Purpose |
+|---|---|
+| `AGENTS.md` | Brief overview (auto-loaded by Kiro) |
+| `.kiro/steering/` | Full behavioral instructions (auto-loaded) |
+| `.kiro/hooks/` | Event-driven automation (auto-triggered) |
+| `.kiro/agents/` | Sales subagents (`/deal-reviewer`, etc.) |
+| `.kiro/skills/` | Workflow commands (`/daily-plan`, etc.) |
+| `.kiro/settings/mcp.json` | MCP server configuration |
+| `System/user-profile.yaml` | Your role, preferences, sales config |
+| `System/pillars.yaml` | Strategic pillars with keyword lists |
+| `CLAUDE.md` | Minimal redirect (full instructions in `.kiro/steering/`) |
 
 ---
 
-## Obsidian Integration (Optional)
-
-Dex works great with [Obsidian](https://obsidian.md) for visual graph navigation.
-
-**Why Obsidian?**
-- See your entire knowledge system as connected nodes
-- Click any reference to jump instantly between people, projects, meetings
-- Bidirectional task sync (check boxes in Obsidian → syncs everywhere)
-
-**Enable Obsidian mode:**
-
-```
-/dex-obsidian-setup
-```
-
-**What this does:**
-- Converts all references to clickable wiki links
-- Generates optimized Obsidian config (optional)
-- Enables bidirectional sync daemon (optional)
-
-**Time:** 1-2 minutes even for large vaults  
-**Safe:** Creates git backup before any changes
-
-**New to Obsidian?** Watch this [beginner's guide (5 min)](https://www.youtube.com/watch?v=gafuqdKwD_U).
-
-Obsidian is completely optional - Dex works perfectly in Cursor/terminal alone. Some users love the graph visualization for navigating their knowledge, others prefer the speed of terminal/Cursor. Both are first-class experiences.
-
-**Learn more:** See [Obsidian_Guide.md](06-Resources/Dex_System/Obsidian_Guide.md)
-
----
-
-## Resources
-
-- [Vibe PM Episode 8](https://youtu.be/WaqgSvL-V10?si=b2Pfwf7I5rozWCo0) — Video walkthrough
-- [Companion Blog Post](https://www.linkedin.com/pulse/your-ai-chief-staff-building-personal-operating-system-dave-killeen-yxnqe/) — Deep dive on all the concepts
-- [Cursor](https://cursor.com) — The AI-powered editor
-- [Granola](https://granola.ai) — Meeting transcription (optional)
-
----
-
-## Share the Vibes
-
-Found this useful? Share with colleagues:
-
-> I've been using an AI operating system for the past few weeks that completely changed how I think about AI tools. It's not just another chat interface — it's a personal chief of staff that manages my day-to-day work (meeting prep, task sync, relationship tracking, strategic planning).
->
-> Here's what surprised me: the system teaches you AI fluency as you use it. You start with pre-built workflows, but within two weeks you're extending it yourself — not coding, just describing what you need and watching it build. It's basically a hands-on course disguised as a productivity tool.
->
-> If you're thinking about where AI is going and how to build organizational muscle around it, this is the best learning environment I've found. Real stakes, real work, immediate feedback. Non-engineers set it up in 10 minutes.
->
-> Check out [Episode 8 of The Vibe PM Podcast](https://youtu.be/WaqgSvL-V10?si=b2Pfwf7I5rozWCo0) for the full walkthrough, or dive straight into the [GitHub repo](https://github.com/davekilleen/dex). Would love to hear what you build with it.
-
----
-
-## Credits
-
-Built with Claude. Created by [Dave Killeen](https://www.linkedin.com/in/davekilleen/), Field CPO for EMEA at Pendo and host of The Vibe PM Podcast.
-
-Thanks to [Noah Brier](https://github.com/heyitsnoah/claudesidian) for the Claudesidian repository that inspired me to bring AI into my markdown files with Obsidian last year and pulled me into this rewarding rabbit hole, and to [Aman Khan](https://www.linkedin.com/in/amanberkeley) from [Arize](https://arize.com) for opening my eyes to the power of MCP servers for task management, and more broadly, for making PKM systems more deterministic and less wishy-washy.
-
----
-
-## Contributing
-
-Made an improvement to your Dex setup? Fixed something that was bugging you? Built a skill that others could use? Dave would love to see it.
-
-**You don't need to be a developer.** Just tell Claude "I want to share my changes with the Dex community" and it'll walk you through the process. See [CONTRIBUTING.md](CONTRIBUTING.md) for the full guide.
-
----
-
-## License
-
-PolyForm Noncommercial 1.0.0.
-
-Commercial use is not allowed without a separate written commercial license from Dave Killeen. See `LICENSE` and `COMMERCIAL_LICENSE.md` for details.
-
----
-
-**Ready to start?** Follow the [setup instructions above](#getting-started) — install [Amazon Kiro](https://kiro.dev), get the code, run `/setup` inside Kiro's chat panel.
+*Powered by [Claude](https://anthropic.com) · Built for [Amazon Kiro](https://kiro.dev)*
