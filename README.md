@@ -1,8 +1,8 @@
-# Dex by Dave — Your AI Chief of Staff
+# Dex for Sales — Your AI Chief of Staff
 
-**A personal operating system powered by Claude.** Strategic work management, meeting intelligence, relationship tracking, daily planning — all configured for your specific role. No coding required.
+**A personal operating system for sales professionals, powered by Claude and running in Amazon Kiro.** Pipeline management, deal intelligence, relationship tracking, daily planning, and quota attainment — all configured for sales ICs, managers, and leaders. No coding required.
 
-Companion to [Episode 8 of The Vibe PM Podcast](https://youtu.be/WaqgSvL-V10?si=b2Pfwf7I5rozWCo0) and the [full blog post](https://www.linkedin.com/pulse/your-ai-chief-staff-building-personal-operating-system-dave-killeen-yxnqe/).
+Built for sales teams using **[Amazon Kiro](https://kiro.dev)** as their AI-native IDE and command center.
 
 ---
 
@@ -10,17 +10,18 @@ Companion to [Episode 8 of The Vibe PM Podcast](https://youtu.be/WaqgSvL-V10?si=
 
 **Total time:** ~10 minutes. Three steps: install tools → get the code → tell it your role.
 
-**Pick one of these to get started:**
+**Recommended IDE:**
 
 | Option | Cost | What It Is |
 |--------|------|------------|
-| **[Cursor](https://cursor.com)** | Free tier works, or $20/month for Pro | An app with a built-in AI assistant (Claude). No separate Claude account needed. |
-| **[Claude Code Desktop](https://claude.ai/download)** | Claude Pro $20/month | Anthropic's own app. Better experience — guaranteed self-learning hooks, automatic context loading. |
-| **Claude Code Terminal** | Claude Pro $20/month | Same as Desktop but runs in Terminal (Mac) or PowerShell (Windows). |
+| **[Amazon Kiro](https://kiro.dev)** ⭐ Recommended | Free during preview | Amazon's AI-native IDE. Purpose-built for agentic workflows. Runs Dex as your sales command center. |
+| **[Claude Code Desktop](https://claude.ai/download)** | Claude Pro $20/month | Anthropic's own app. Excellent experience with guaranteed self-learning hooks and automatic context loading. |
+| **[Cursor](https://cursor.com)** | Free tier works, or $20/month for Pro | A VS Code-based editor with a built-in AI assistant (Claude). |
+| **Claude Code Terminal** | Claude Pro $20/month | Same as Claude Code Desktop but runs in Terminal (Mac) or PowerShell (Windows). |
 
-> **You do NOT go to claude.ai and type commands.** You need one of the apps above. Cursor is the easiest starting point. Claude Code (Desktop or Terminal) gives you a better experience with self-learning hooks — setup instructions for those are [further down this page](#want-guaranteed-hooks-use-claude-code-cli-or-desktop-app).
+> **You do NOT go to claude.ai and type commands.** You need one of the apps above. **Amazon Kiro is the recommended starting point for sales teams** — it's purpose-built for agentic AI workflows and runs Dex natively. Claude Code (Desktop or Terminal) is the next-best option with guaranteed hooks.
 
-**Not sure which?** Start with Cursor — it's free and gets you running in minutes. You can add or switch to Claude Code later.
+**Not sure which?** Start with Amazon Kiro — download at [kiro.dev](https://kiro.dev). It's free during preview and gives you the best sales workflow experience with Dex.
 
 ---
 
@@ -28,7 +29,7 @@ Companion to [Episode 8 of The Vibe PM Podcast](https://youtu.be/WaqgSvL-V10?si=
 
 ### What You'll Need to Install (One-Time)
 
-1. **[Cursor](https://cursor.com/)** - Download and install (free account works fine)
+1. **[Amazon Kiro](https://kiro.dev/)** - Download and install (free during preview) — this is your IDE and command center
 2. **[Git](https://git-scm.com)** - Required for setup and updates
    - **Mac:** Installs automatically when needed (you'll see a prompt)
    - **Windows:** Download from [git-scm.com/download/win](https://git-scm.com/download/win)
@@ -104,9 +105,9 @@ python3 --version
 
 **That's the technical heavy lifting done.** If you got through that, the rest is straightforward - just clicking buttons and answering questions.
 
-### Step 1: Get the Code into Cursor
+### Step 1: Get the Code into Kiro
 
-1. Open **Cursor**
+1. Open **Amazon Kiro**
 2. Press `Cmd+Shift+P` (Mac) or `Ctrl+Shift+P` (Windows) - this opens a search bar at the top
 3. Type **"Git: Clone"** and press Enter
 4. Paste this URL and press Enter:
@@ -114,17 +115,19 @@ python3 --version
    https://github.com/davekilleen/dex.git
    ```
 5. Choose where to save it (your Documents folder works great)
-6. Click **Open** when Cursor asks if you want to open the folder
+6. Click **Open** when Kiro asks if you want to open the folder
+
+**Using a different IDE?** The same steps work in Cursor and Claude Code Desktop — just substitute the IDE name above.
 
 **Can't get this working?** No problem:
 1. Go to [github.com/davekilleen/dex](https://github.com/davekilleen/dex)
 2. Click the green **Code** button → **Download ZIP**
 3. Unzip to your Documents folder (the folder will be named `dex-main`)
-4. In Cursor: **File → Open Folder** → select that `dex-main` folder
+4. In Kiro: **File → Open Folder** → select that `dex-main` folder
 
 ### Step 2: Run the Installer
 
-Inside Cursor, you'll see a panel at the bottom (or go to **View → Terminal**). This is where you'll type commands.
+Inside Kiro (or your chosen IDE), you'll see a panel at the bottom (or go to **View → Terminal**). This is where you'll type commands.
 
 Copy and paste this command and press Enter:
 
@@ -138,7 +141,7 @@ Copy and paste this command and press Enter:
 
 ⚠️ **IMPORTANT: You're not done yet. Complete Steps 2B and 3 to finish setup.**
 
-**Verify MCP servers:** Cursor should automatically detect `.mcp.json` and enable the MCP servers. Look for the MCP icon in Cursor's bottom panel - you should see server names with green checkmarks.
+**Verify MCP servers:** Kiro (and Cursor/Claude Code) should automatically detect `.mcp.json` and enable the MCP servers. Look for the MCP icon in your IDE's bottom panel - you should see server names with green checkmarks.
 
 **If you see errors:** The most common issue is Python dependencies. First upgrade pip, then install packages:
 
@@ -147,7 +150,7 @@ python3 -m pip install --upgrade pip
 pip3 install --user "mcp>=1.0.0,<2.0.0" pyyaml python-dateutil
 ```
 
-Then restart Cursor.
+Then restart Kiro (or your IDE).
 
 <details>
 <summary><strong>Use Google Calendar? Connect it so Dex shows your meetings (Mac)</strong></summary>
@@ -157,8 +160,8 @@ If you use **Google Calendar**, you can have Dex show your real meetings when yo
 **Step 1 — Add Google to your Mac's Calendar app**  
 Open the **Calendar** app (the one that came with your Mac). In the menu bar, click **Calendar** → **Add Account…** → choose **Google** → sign in with your Google account. Your Google events will sync into Calendar. Dex reads from this app, so once Google is here, Dex sees your meetings.
 
-**Step 2 — Let Cursor use your calendar**  
-Open **System Settings** → **Privacy & Security** → **Calendars**. Turn **Cursor** on, then click **Cursor** and choose **Full** access (not "Add Only") so Dex can read your events. If macOS pops up asking "Cursor would like to access your calendars", click **Allow**.
+**Step 2 — Let your IDE use your calendar**
+Open **System Settings** → **Privacy & Security** → **Calendars**. Turn **Kiro** (or Cursor/Claude Code, whichever IDE you're using) on, then choose **Full** access (not "Add Only") so Dex can read your events. If macOS pops up asking for calendar access, click **Allow**.
 
 That's it. The installer already set up the rest on Mac. Your meetings—including recurring ones like weekly 1:1s—will show on the correct days in Dex.
 
@@ -241,7 +244,7 @@ pip install --user "mcp>=1.0.0,<2.0.0" pyyaml python-dateutil
 
 ---
 
-### MCP Servers Show Errors in Cursor
+### MCP Servers Show Errors in Kiro / Cursor
 
 If you see red error indicators next to MCP server names in Cursor:
 
@@ -919,4 +922,4 @@ Commercial use is not allowed without a separate written commercial license from
 
 ---
 
-**Ready to start?** Follow the [setup instructions above](#getting-started) — install Cursor, get the code, run `/setup` inside Cursor's chat panel.
+**Ready to start?** Follow the [setup instructions above](#getting-started) — install [Amazon Kiro](https://kiro.dev), get the code, run `/setup` inside Kiro's chat panel.

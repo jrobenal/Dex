@@ -7,6 +7,25 @@ All notable changes to Dex will be documented in this file.
 
 ---
 
+## [1.18.3] — Amazon Kiro IDE + Sales Team Customization (2026-03-16)
+
+This release customizes Dex for **sales teams** (ICs, managers, and leaders) using **Amazon Kiro** as the primary IDE and command center.
+
+**What changed:**
+
+* **Amazon Kiro as primary IDE** — README setup instructions now lead with Kiro (kiro.dev) instead of Cursor. Kiro is recommended for sales teams due to its agentic workflow support. Cursor and Claude Code remain fully supported as alternatives.
+* **Sales-focused identity** — CLAUDE.md updated to position Dex as a sales professional's assistant. Tone, context, and behaviors now adapt to sales IC, manager, and leader roles.
+* **Five pre-built sales pillars** — `System/pillars.yaml` now ships with fully configured pillars (Pipeline Development, Deal Execution, Customer Success & Expansion, Team & Coaching, Revenue Strategy & Operations) with keyword lists for automatic task categorization.
+* **Sales meeting intelligence on by default** — `System/user-profile.yaml` enables customer intel, competitive intel, BANT extraction, stakeholder dynamics, objection capture, next-step detection, and deal signal monitoring out of the box.
+* **Quarterly planning enabled by default** — Sales runs on quarters; this is now the default.
+* **Sales-specific folder conventions** — Deals go in `04-Projects/Deals/`, competitors in `06-Resources/Competitive/`, playbooks in `06-Resources/Playbooks/`.
+* **Sales career evidence tags** — New `# Career:` tags for Pipeline Generation, Deal Execution, Customer Expansion, Sales Leadership, Strategic Selling, and Revenue Operations.
+* **Sales configuration block** — `user-profile.yaml` now includes a `sales:` section for role level (IC/manager/leader), quota, CRM, segment, deal motion, and at-risk deal thresholds.
+
+**What you need to do:** Existing users run `/dex-update` to pull in the new pillar and profile templates. New users: setup is unchanged — follow the README.
+
+---
+
 ## [1.18.2] — Fix Background Meeting Sync Installation (2026-03-12)
 
 `install-automation.sh` failed because it referenced two files that no longer exist: `granola-auth.cjs` (deprecated — Granola now stores credentials in `supabase.json` automatically) and `sync-from-granola-v2.cjs` (never shipped — v1 works fine).
