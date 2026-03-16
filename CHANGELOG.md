@@ -7,6 +7,36 @@ All notable changes to Dex will be documented in this file.
 
 ---
 
+## [1.18.5] — Kiro UX Polish: Zero-friction Setup for Sales Teams (2026-03-16)
+
+**Goal:** Make it dead simple for a non-technical sales person to download this and be productive in Kiro within 5 minutes.
+
+**What changed:**
+
+* **`dex-setup.sh` / `dex-setup.bat`** — One-command setup script for Mac/Linux and Windows. Auto-detects vault path, installs Python + Node dependencies, bakes VAULT_PATH into `.kiro/settings/mcp.json` (no manual env var editing required), and sets VAULT_PATH system-wide via `launchctl setenv` (Mac) or `setx` (Windows) so Kiro picks it up without shell restarts. Gives clear success/error feedback with next steps.
+
+* **`QUICKSTART.md`** — 5-step guide. Install Kiro → install prerequisites → clone → run `./dex-setup.sh` → type `/getting-started`. Nothing else.
+
+* **Removed 3 noisy hooks** — `person-context.kiro.hook`, `company-context.kiro.hook`, and `deal-stale.kiro.hook` removed. In Kiro, `hookAction: "askAgent"` fires a *visible* new agent interaction on every file save — extremely disruptive. Context enrichment and deal-stale detection moved to `.kiro/steering/behaviors.md` as always-on instructions. Same capability, zero noise.
+
+* **`.kiro/steering/behaviors.md` updated** — Added "Automatic Context Enrichment" section covering: silently look up person pages when names appear, silently look up company pages when accounts appear, scan for stale deals when pipeline is discussed. Replaces the 3 removed hooks.
+
+* **`.kiro/settings/mcp.json` fixed** — Removed `_comment_optional` key (Kiro was attempting to connect it as an MCP server).
+
+* **All 72 skills now in `.kiro/skills/`** — Migrated remaining 57 skills (previously only 12 were there). Also promoted 4 sales-specific skills from `_available/sales/`: `account-plan`, `call-prep`, `deal-review`, `pipeline-health`. Every skill now appears when users type `/` in Kiro.
+
+* **`QUICKSTART.md` + `README.md`** — README now leads with the quickstart link and a simple what-it-does table. Setup section reduced to one `./dex-setup.sh` command.
+
+* **Onboarding flow updated** — Removed Cursor/Claude Code platform detection from `.claude/flows/onboarding.md`. Kiro uses conversational chat natively.
+
+* **`getting-started` skill updated** — Replaced "Cursor UX tip" with a Kiro Autopilot vs Supervised mode tip.
+
+**What you need to do (fresh install):** Clone the repo, open in Kiro, run `./dex-setup.sh` in terminal, restart Kiro, type `/getting-started`.
+
+**What you need to do (existing install):** Run `/dex-update` to pull in the new setup scripts and skill migrations.
+
+---
+
 ## [1.18.4] — Kiro-Native Architecture Migration (2026-03-16)
 
 This release rearchitects Dex from Claude Code / Cursor conventions to Amazon Kiro's native paradigms. The previous release (1.18.3) only changed text labels — this one migrates the actual config layer.

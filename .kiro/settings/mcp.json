@@ -94,8 +94,6 @@
       "autoApprove": ["track_event"]
     },
 
-    "_comment_optional": "--- Optional Integrations (enable by removing 'disabled: true') ---",
-
     "slack-mcp": {
       "command": "npx",
       "args": ["-y", "slack-mcp"],

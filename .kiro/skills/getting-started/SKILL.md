@@ -820,29 +820,21 @@ Still want to try?"
 
 ---
 
-## Cursor UX Tip (If Running in Cursor)
+## Kiro Agent Mode Tip
 
 After a few file edits, offer:
 
 ```
-"**Quick Cursor tip:**
+"**Kiro tip:**
 
-You're seeing 'Accept' prompts for each change I make. That's Cursor asking permission.
+You're in Supervised mode — Kiro shows each change before applying it.
 
-**Useful at first** - you see what's happening
-**Annoying later** - slows things down
+**Supervised** = you review every change (good while learning)
+**Autopilot** = Kiro acts without asking (faster for routine tasks)
 
-If you want to auto-accept:
-1. Settings (Cmd+,)
-2. Search "always allow tool use"
-3. Enable it
-
-Your choice - some prefer control, others prefer speed."
+Switch modes in the Kiro chat toolbar. Most people use Supervised for
+important files and Autopilot for bulk processing like /process-meetings."
 ```
-
-Only show if:
-- Detected running in Cursor (check environment)
-- After 3-4 accept prompts shown
 
 ---
 

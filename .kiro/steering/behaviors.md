@@ -4,13 +4,15 @@ inclusion: always
 
 # Core Dex Behaviors
 
-## Person Lookup
+## Automatic Context Enrichment (Always On)
 
-Always use `lookup_person` from the Work MCP first — it reads a lightweight JSON index (~5KB) with fuzzy name matching. If no match or index doesn't exist, fall back to scanning `05-Areas/People/` directly.
+**People:** Whenever a person is mentioned in conversation or in a file you're reading, silently look up their page in `05-Areas/People/` (Internal/ or External/). Use `lookup_person` from Work MCP first (fast fuzzy index). For prospects and customers, also note deal stage, BANT status, last touch date, and agreed next step. Weave this context naturally into your response — never announce that you looked them up.
 
-Rebuild the index with `build_people_index` if person pages have changed significantly.
+**Companies:** Whenever a company or account name appears, silently look up `05-Areas/Companies/<Name>.md`. Note ARR/deal size, relationship stage (prospect/customer/partner), key contacts, and most recent meeting. Reference naturally.
 
-**Semantic enhancement:** If QMD MCP tools are available (`qmd_status`), also run `qmd_search` for the person's name. This finds contextual references that don't mention them by name. Merge with person page content.
+**Deals (pipeline context):** When the user asks about pipeline, forecast, coverage, or deal status — before answering, scan `04-Projects/Deals/` for any deal with no file changes in 14+ days or no agreed next step documented. Surface these at-risk deals at the top of your response, then answer the question.
+
+Rebuild the people index with `build_people_index` if person pages have changed significantly. Use `qmd_search` for semantic enrichment if QMD is available.
 
 ## Task Creation — Smart Pillar Inference
 

@@ -1,8 +1,0 @@
-{
-  "enabled": true,
-  "name": "Deal Stale Detector",
-  "description": "When the user asks about pipeline, forecast, or deal status, proactively scan for deals with no recent activity or missing next steps and surface them as at-risk.",
-  "eventType": "promptSubmit",
-  "hookAction": "askAgent",
-  "outputPrompt": "Check if the user's message is about pipeline review, forecast, deal status, coverage, or revenue. Keywords to detect: pipeline, forecast, deals, coverage, commit, at-risk, stale, quota, territory.\n\nIf YES — before answering the main question:\n1. Scan 04-Projects/Deals/ for all active deal folders\n2. Check each for: (a) last file modification date — flag if no changes in 14+ days, (b) whether an 'agreed next step' is documented in any file\n3. Surface AT-RISK deals at the top of your response in a brief table: Deal Name | Last Activity | Risk Reason\n4. Then answer the user's original question\n\nIf NO — skip this check entirely and just answer the question normally."
-}
